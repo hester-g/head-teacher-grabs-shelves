@@ -18,7 +18,7 @@ const logIn = () => {
   let state = 'somethingsomething'
 
   // localStorage.setItem(stateKey, state);
-  let scope = 'user-read-private user-read-email'
+  let scope = 'user-read-playback-state user-read-currently-playing playlist-read-private playlist-read-collaborative user-read-playback-position user-top-read user-read-recently-played user-library-read user-read-email user-read-private'
 
   let url = 'https://accounts.spotify.com/authorize'
   url += '?response_type=token'
@@ -32,24 +32,27 @@ const logIn = () => {
 
 export function App () {
   const [username, setUsername] = useState(false)
+  const [topTracks, setTopTracks] = useState([])
 
   let params = getHashParams()
   let accessToken = params.access_token
 
   if (accessToken) {
-    axios.get('https://api.spotify.com/v1/me', {
+    axios.get('https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=50', {
       headers: {
         Authorization: 'Bearer ' + accessToken
       }
     })
-    .then(response => setUsername(response.data.display_name))
+    .then(response => setTopTracks(response.data.items))
     .catch(response => console.log(response))
-
   }
+
+
   return <>
     <h1>Hello world!</h1>
-    {username || 'no username :('}
+    {/*{username || 'no username :('}*/}
+    { topTracks.map(track => <img src={track.album.images[2].url} />) }
     <br />
-    {accessToken ? <p>logged in</p> : <button onClick={logIn}>Log In Or Something!</button>}
+    { accessToken ? <p>logged in</p> : <button onClick={logIn}>Log In Or Something!</button> }
   </>
 }
