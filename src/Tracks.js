@@ -29,7 +29,16 @@ const CoverImage = ({ src, title, artist }) => {
       left: '0'
     }}>
       <Image src={src} style={{ maxWidth: '80vh' }}/>
-      <div style={{paddingRight: 'calc(50vh - 320px)'}}>{title}</div>
+      <div style={{
+        paddingRight: 'calc(50vh - 320px)',
+        fontFamily: 'Bebas Neue, cursive',
+        fontSize: '5rem',
+        textAlign: 'right',
+        color: 'white'
+      }}>
+        {/*<span style={{background: 'rgba(105, 105, 105, 0.5)', height: '5rem'}}>{title}</span>*/}
+        {title}
+      </div>
     </div>
   </div>
 }
