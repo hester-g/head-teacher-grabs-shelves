@@ -7,8 +7,8 @@ Head teacher grabs shelves for courses. [6]
 - [ ] artists
 - [ ] more FE
 - [ ] navibar at the top?
-- [ ] making URL not have hash in it?
-- [ ] ... so we can use window.location for redirectURI
+- [x] making URL not have hash in it?
+- [x] ... so we can use window.location for redirectURI
 - [ ] styled components?
-- [ ] Text background & putting in artist
+- [x] Text background & putting in artist
 - [ ] cleaning up the style of the track component
