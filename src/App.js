@@ -1,25 +1,7 @@
-import axios from 'axios'
 import { useState } from 'react'
 import { Auth } from './Auth'
-import { AuthProvider, useAuthToken } from './auth-context'
-
-
-const Tracks = () => {
-  const { token } = useAuthToken()
-  const [topTracks, setTopTracks] = useState([])
-
-  if (token) {
-    axios.get('https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=50', {
-      headers: {
-        Authorization: 'Bearer ' + token
-      }
-    })
-    .then(response => setTopTracks(response.data.items))
-    .catch(response => console.log(response))
-  }
-
-  return topTracks.map(track => <img src={track.album.images[2].url} />)
-}
+import { AuthProvider } from './auth-context'
+import { Tracks } from './Tracks'
 
 export function App () {
   const [username, setUsername] = useState(false)
