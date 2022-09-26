@@ -31,13 +31,16 @@ const logIn = () => {
 }
 
 export function Auth () {
-  const { setToken } = useAuthToken()
-  let params = getHashParams()
-  let accessToken = params.access_token
+  const { token, setToken } = useAuthToken()
 
   React.useEffect(() => {
-    setToken(accessToken)
-  }, [accessToken])
+    if (!token) {
+      let params = getHashParams()
+      let accessToken = params.access_token
 
-  return accessToken ? <p>logged in</p> : <button onClick={logIn}>Log In Or Something!</button>
+      setToken(accessToken)
+    }
+  }, [token])
+
+  return token ? <p>logged in</p> : <button onClick={logIn}>Log In Or Something!</button>
 }

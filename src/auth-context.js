@@ -2,8 +2,30 @@ import React from 'react'
 
 const AuthContext = React.createContext()
 
-function AuthProvider({ children }) {
-  const [token, setToken] = React.useState('')
+const useLocalStorageState = (key, defaultValue = '') => {
+  const [state, setState] = React.useState(
+    () => window.localStorage.getItem(key) || defaultValue
+  )
+
+  React.useEffect(() => {
+    const setLastKey = () => {
+      window.localStorage.setItem('lastKey', key)
+      window.localStorage.setItem(key, state)
+    }
+    if (key !== window.localStorage.getItem('lastKey')) {
+      const lastKey = localStorage.getItem('lastKey')
+      window.localStorage.removeItem(lastKey)
+      setLastKey()
+    } else {
+      setLastKey()
+    }
+  }, [key, state])
+
+  return [state, setState]
+}
+
+function AuthProvider ({ children }) {
+  const [token, setToken] = useLocalStorageState('spotify_access_token', '')
 
   const value = {
     token: token,
@@ -13,7 +35,7 @@ function AuthProvider({ children }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
-function useAuthToken() {
+function useAuthToken () {
   const context = React.useContext(AuthContext)
 
   if (context === undefined) {
@@ -23,4 +45,4 @@ function useAuthToken() {
   return context
 }
 
-export {AuthProvider, useAuthToken}
+export { AuthProvider, useAuthToken }
