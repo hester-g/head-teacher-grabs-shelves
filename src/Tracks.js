@@ -4,14 +4,35 @@ import { useAuthToken } from './auth-context'
 import Image from 'react-bootstrap/Image'
 import { useTracks } from './tracks-context'
 
-const CoverImage = ({ src }) => <div style={{position: 'relative', overflow: 'hidden', height: '100vh'}}>
-  <Image
-    src={src}
-    style={{position: 'absolute', height: '120vh', width: '120vw', top: '-10vh', left: '-10vw', objectFit: 'cover', filter: 'blur(50px)'}}
-  />
-  <Image src={src} style={{position: 'relative', top: 'calc(50vh - 320px)', left: 'calc(50vw - 320px)'}}/>
-</div>
-
+const CoverImage = ({ src, title, artist }) => {
+  return <div style={{ position: 'relative', overflow: 'hidden', height: '100vh' }}>
+    <Image
+      src={src}
+      style={{
+        position: 'absolute',
+        height: '120vh',
+        width: '120vw',
+        top: '-10vh',
+        left: '-10vw',
+        objectFit: 'cover',
+        filter: 'blur(50px)'
+      }}
+    />
+    <div style={{
+      paddingLeft: 'calc(50vh - 320px)',
+      maxHeight: '80vh',
+      display: 'flex',
+      justifyContent: 'space-between',
+      position: 'relative',
+      width: '100vw',
+      top: 'calc(50vh - 320px)',
+      left: '0'
+    }}>
+      <Image src={src} style={{ maxWidth: '80vh' }}/>
+      <div style={{paddingRight: 'calc(50vh - 320px)'}}>{title}</div>
+    </div>
+  </div>
+}
 
 export function Tracks ({ style }) {
   const { token } = useAuthToken()
@@ -32,6 +53,6 @@ export function Tracks ({ style }) {
   }
 
   return <div style={style}>
-      {tracks.map(track => <CoverImage src={track.album.images[0].url} />)}
+      {tracks.map(track => <CoverImage src={track.album.images[0].url} title={track.name}/>)}
     </div>
 }
