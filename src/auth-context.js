@@ -29,7 +29,8 @@ function AuthProvider ({ children }) {
 
   const value = {
     token: token,
-    setToken: setToken
+    setToken: setToken,
+    logout: () => setToken('')
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

@@ -11,9 +11,9 @@ function getHashParams () {
   return hashParams
 }
 
-const logIn = () => {
+const login = () => {
   let client_id = 'bd1520ae2c17407ab801c59a39447ef7' // Your client id
-  let redirect_uri = window.location // Your redirect uri
+  let redirect_uri = 'http://localhost:1234' // Your redirect uri
 
   let state = 'somethingsomething'
 
@@ -31,7 +31,7 @@ const logIn = () => {
 }
 
 export function Auth () {
-  const { token, setToken } = useAuthToken()
+  const { token, setToken, logout } = useAuthToken()
 
   React.useEffect(() => {
     if (!token) {
@@ -40,9 +40,12 @@ export function Auth () {
 
       if (accessToken) {
         setToken(accessToken)
+        window.location.hash = ''
       }
     }
   }, [token])
 
-  return token ? <p>logged in</p> : <button onClick={logIn}>Log In Or Something!</button>
+  return token
+    ?  <button onClick={logout}>Log Out Or Something!</button>
+    : <button onClick={login}>Log In Or Something!</button>
 }

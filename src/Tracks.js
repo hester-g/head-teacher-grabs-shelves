@@ -14,6 +14,8 @@ export function Tracks () {
     })
     .then(response => setTopTracks(response.data.items))
     .catch(response => console.log(response))
+  } else {
+    return
   }
 
   return topTracks.map(track => <img src={track.album.images[2].url} />)
