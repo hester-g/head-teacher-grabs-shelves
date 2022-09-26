@@ -10,9 +10,9 @@ export function App () {
     <h1>Hello world!</h1>
     {/*{username || 'no username :('}*/}
     <AuthProvider>
-      <Tracks style={{width: '100vw'}}/>
-      <br />
       <Auth />
+      <br />
+      <Tracks style={{height: '100vh'}}/>
     </AuthProvider>
   </>
 }
