@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useAuthToken } from './auth-context'
 import Button from 'react-bootstrap/Button'
+import { useTracks } from './tracks-context'
 
 function getHashParams () {
   let hashParams = {}
@@ -32,7 +33,13 @@ const login = () => {
 }
 
 export function Auth () {
-  const { token, setToken, logout } = useAuthToken()
+  const { token, setToken, resetToken } = useAuthToken()
+  const { resetTracks } = useTracks()
+
+  const logout = useCallback(() => {
+    resetToken()
+    resetTracks()
+  }, [resetToken, resetTracks])
 
   React.useEffect(() => {
     if (!token) {
