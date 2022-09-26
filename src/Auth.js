@@ -1,5 +1,6 @@
 import React from 'react'
-import { useAuthToken } from "./auth-context"
+import { useAuthToken } from './auth-context'
+import Button from 'react-bootstrap/Button'
 
 function getHashParams () {
   let hashParams = {}
@@ -46,6 +47,6 @@ export function Auth () {
   }, [token])
 
   return token
-    ?  <button onClick={logout}>Log Out Or Something!</button>
-    : <button onClick={login}>Log In Or Something!</button>
+    ? <Button onClick={logout}>Log Out Or Something!</Button>
+    : <Button onClick={login}>Log In Or Something!</Button>
 }

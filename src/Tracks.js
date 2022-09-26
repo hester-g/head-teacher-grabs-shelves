@@ -1,8 +1,9 @@
 import axios from 'axios'
 import React from 'react'
-import { useAuthToken } from "./auth-context"
+import { useAuthToken } from './auth-context'
+import Image from 'react-bootstrap/Image'
 
-export function Tracks () {
+export function Tracks ({ style }) {
   const { token } = useAuthToken()
   const [topTracks, setTopTracks] = React.useState([])
 
@@ -18,5 +19,7 @@ export function Tracks () {
     return
   }
 
-  return topTracks.map(track => <img src={track.album.images[2].url} />)
+  return <div style={style}>
+      {topTracks.map(track => <Image src={track.album.images[0].url} style={{minWidth: '100%'}} />)}
+    </div>
 }
