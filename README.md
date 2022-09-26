@@ -1,3 +1,3 @@
 # head-teacher-grabs-shelves
 
-Head teacher grabs for courses. [6]
+Head teacher grabs shelves for courses. [6]
