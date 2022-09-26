@@ -4,7 +4,7 @@ import { useAuthToken } from './auth-context'
 import Image from 'react-bootstrap/Image'
 import { useTracks } from './tracks-context'
 
-const CoverImage = ({ src, title, artist }) => {
+const CoverImage = ({ src, title, artist, position }) => {
   return <div style={{ position: 'relative', overflow: 'hidden', height: '100vh' }}>
     <Image
       src={src}
@@ -20,6 +20,7 @@ const CoverImage = ({ src, title, artist }) => {
     />
     <div style={{
       paddingLeft: 'calc(50vh - 320px)',
+      marginRight: 'calc(50vh - 320px)',
       maxHeight: '80vh',
       display: 'flex',
       justifyContent: 'space-between',
@@ -30,14 +31,22 @@ const CoverImage = ({ src, title, artist }) => {
     }}>
       <Image src={src} style={{ maxWidth: '80vh' }}/>
       <div style={{
-        paddingRight: 'calc(50vh - 320px)',
         fontFamily: 'Bebas Neue, cursive',
-        fontSize: '5rem',
         textAlign: 'right',
-        color: 'white'
+        color: 'white',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between'
+        // webkitTextStroke: '1px black' - text outline
       }}>
-        {/*<span style={{background: 'rgba(105, 105, 105, 0.5)', height: '5rem'}}>{title}</span>*/}
-        {title}
+        <div style={{backgroundColor: 'rgba(30, 30, 30, 0.5)', display:'block', paddingRight: 'calc(50vh - 320px)', paddingLeft: 'calc(50vh - 320px)'}}>
+          <span style={{fontSize: '5rem'}}>{title}</span>
+          <br />
+          <span style={{fontSize: '4rem'}}>{artist}</span>
+        </div>
+        <div style={{fontSize: '4rem'}}>
+          <span style={{backgroundColor: 'rgba(30, 30, 30, 0.5)', paddingRight: 'calc(50vh - 320px)', paddingLeft: 'calc(50vh - 320px)'}}>#{position}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -62,6 +71,13 @@ export function Tracks ({ style }) {
   }
 
   return <div style={style}>
-      {tracks.map(track => <CoverImage src={track.album.images[0].url} title={track.name}/>)}
+      {tracks.map((track, index) =>
+        <CoverImage
+          src={track.album.images[0].url}
+          title={track.name}
+          artist={track.artists.map(artist => artist.name).join(', ')}
+          position={index+1}
+        />
+      )}
     </div>
 }
