@@ -13,7 +13,7 @@ function getHashParams () {
 
 const logIn = () => {
   let client_id = 'bd1520ae2c17407ab801c59a39447ef7' // Your client id
-  let redirect_uri = 'http://localhost:1234' // Your redirect uri
+  let redirect_uri = window.location // Your redirect uri
 
   let state = 'somethingsomething'
 
