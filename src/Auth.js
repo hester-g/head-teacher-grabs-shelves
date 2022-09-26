@@ -15,7 +15,7 @@ function getHashParams () {
 
 const login = () => {
   let client_id = '' // Your client id
-  let redirect_uri = 'http://localhost:1234' // Your redirect uri
+  let redirect_uri = window.location // Your redirect uri
 
   let state = 'somethingsomething'
 
@@ -48,7 +48,7 @@ export function Auth () {
 
       if (accessToken) {
         setToken(accessToken)
-        window.location.hash = ''
+        window.location = window.location.origin
       }
     }
   }, [token])
