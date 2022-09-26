@@ -38,7 +38,9 @@ export function Auth () {
       let params = getHashParams()
       let accessToken = params.access_token
 
-      setToken(accessToken)
+      if (accessToken) {
+        setToken(accessToken)
+      }
     }
   }, [token])
 
