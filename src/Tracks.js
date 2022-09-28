@@ -5,7 +5,7 @@ import Image from 'react-bootstrap/Image'
 import { useTracks } from './tracks-context'
 
 const CoverImage = ({ src, title, artist, position }) => {
-  return <div style={{ position: 'relative', overflow: 'hidden', height: '100vh' }}>
+  return <div id={position} style={{ position: 'relative', overflow: 'hidden', height: '100vh' }}>
     <Image
       src={src}
       style={{
@@ -73,6 +73,7 @@ export function Tracks ({ style }) {
   return <div style={style}>
       {tracks.map((track, index) =>
         <CoverImage
+          key={index}
           src={track.album.images[0].url}
           title={track.name}
           artist={track.artists.map(artist => artist.name).join(', ')}
