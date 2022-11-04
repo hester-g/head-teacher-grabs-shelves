@@ -54,6 +54,6 @@ export function Auth () {
   }, [token])
 
   return token
-    ? <Button onClick={logout}>Log Out Or Something!</Button>
-    : <Button onClick={login}>Log In Or Something!</Button>
+    ? <Button variant="secondary" onClick={logout}>Logout</Button>
+    : <Button variant="secondary" onClick={login}>Login</Button>
 }
