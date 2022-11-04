@@ -29,7 +29,7 @@ export function App () {
   }, [])
 
   useEffect(() => {
-    window.location.hash = current
+    window.location.hash = current > 0 ? current : ''
   }, [current])
 
   return <>

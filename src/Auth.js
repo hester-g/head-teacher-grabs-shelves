@@ -15,7 +15,7 @@ function getHashParams () {
 
 const login = () => {
   let client_id = '' // Your client id
-  let redirect_uri = window.location // Your redirect uri
+  let redirect_uri = window.location.origin // Your redirect uri
 
   let state = 'somethingsomething'
 
