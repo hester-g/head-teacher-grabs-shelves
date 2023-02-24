@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAuthToken } from './auth-context'
 import Image from 'react-bootstrap/Image'
 import { useTracks } from './tracks-context'
@@ -52,22 +52,25 @@ const CoverImage = ({ src, title, artist, position }) => {
   </div>
 }
 
-export function Tracks ({ style }) {
+export function Tracks ({ style, timeframe }) {
   const { token } = useAuthToken()
   const { tracks, setTracks } = useTracks()
 
-  if (tracks.length === 0) {
+  useEffect(() => {
+    console.log(timeframe)
     if (token) {
-      axios.get('https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=50', {
+      axios.get('https://api.spotify.com/v1/me/top/tracks?time_range=' + timeframe + '&limit=50', {
         headers: {
           Authorization: 'Bearer ' + token
         }
       })
-      .then(response => setTracks(response.data.items))
-      .catch(response => console.log(response))
-    } else {
-      return
+        .then(response => setTracks(response.data.items))
+        .catch(response => console.log(response))
     }
+  }, [timeframe])
+
+  if (!token) {
+    return
   }
 
   return <div style={style}>

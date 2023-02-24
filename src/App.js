@@ -4,10 +4,12 @@ import { AuthProvider } from './auth-context'
 import { Nav } from './Nav'
 import { Tracks } from './Tracks'
 import { TracksProvider } from './tracks-context'
+import TimeSelector from './TimeSelector'
 
 export function App () {
   const [current, setCurrent] = useState(0)
   const [username, setUsername] = useState(false)
+  const [timeframe, setTimeframe] = useState('long_term')
 
   useEffect(() => {
     const originalKeydown = document.onkeydown || (() => {})
@@ -37,9 +39,10 @@ export function App () {
     <TracksProvider>
       <AuthProvider>
         <Nav>
+          <TimeSelector setTimeframe={setTimeframe} />
           <Auth />
         </Nav>
-        <Tracks style={{height: '100vh'}}/>
+        <Tracks style={{height: '100vh'}} timeframe={timeframe} />
       </AuthProvider>
     </TracksProvider>
   </>
