@@ -3,10 +3,10 @@
 Head teacher grabs shelves for courses. [6]
 
 - [ ] Check state string
-- [ ] short/medium/long tracks
+- [x] short/medium/long tracks
 - [ ] artists
 - [ ] more FE
-- [ ] navibar at the top?
+- [x] navibar at the top?
 - [x] making URL not have hash in it?
 - [x] ... so we can use window.location for redirectURI
 - [ ] styled components?
