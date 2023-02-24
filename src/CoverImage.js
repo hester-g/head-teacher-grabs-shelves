@@ -2,10 +2,14 @@ import React from 'react'
 import Image from 'react-bootstrap/Image'
 
 const CoverImage = ({ src, title, subtitle, position }) => {
+  const colour = position/50 * 360
+  const backgroundBackgroundColour = !src ? {background: 'linear-gradient(90deg, hsla(' + colour + ', 100%, 50%, 0.8) 0%, hsla(' + colour + ', 80%, 80%, 0.8) 100%)'} : {}
+  const backgroundImage = src ? {src} : {}
   return <div id={position} style={{ position: 'relative', overflow: 'hidden', height: '100vh' }}>
     <Image
-      src={src}
+      {...backgroundImage}
       style={{
+        ...backgroundBackgroundColour,
         position: 'absolute',
         height: '120vh',
         width: '120vw',
@@ -26,7 +30,7 @@ const CoverImage = ({ src, title, subtitle, position }) => {
       top: 'calc(50vh - 320px)',
       left: '0'
     }}>
-      <Image src={src} style={{ maxWidth: '80vh' }}/>
+      <Image {...backgroundImage} style={{ maxWidth: '80vh' }}/>
       <div style={{
         fontFamily: 'Bebas Neue, cursive',
         textAlign: 'right',
