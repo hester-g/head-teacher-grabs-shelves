@@ -8,19 +8,24 @@ const TracksContext = React.createContext()
 function TracksProvider ({ children }) {
   const [tracks, setTracks, resetTracks] = useLocalStorageState(
     'top_tracks',
-    []
+    {}
   )
   const [artists, setArtists, resetArtists] = useLocalStorageState(
     'top_artists',
-    []
+    {}
   )
   const { token } = useAuthToken()
   const [timeframe, setTimeframe] = useState('long_term')
 
+  const resetTracksAndArtists = () => {
+    resetTracks()
+    resetArtists()
+  }
+
   const value = {
-    tracks: tracks,
-    artists: artists,
-    resetTracks: resetTracks,
+    tracks: tracks[timeframe],
+    artists: artists[timeframe],
+    resetTracksAndArtists: resetTracksAndArtists,
     setTimeframeShort: () => setTimeframe('short_term'),
     setTimeframeMedium: () => setTimeframe('medium_term'),
     setTimeframeLong: () => setTimeframe('long_term')
@@ -28,33 +33,37 @@ function TracksProvider ({ children }) {
 
   useEffect(() => {
     if (token) {
-      axios
-        .get(
-          'https://api.spotify.com/v1/me/top/tracks?time_range=' +
-            timeframe +
-            '&limit=50',
-          {
-            headers: {
-              Authorization: 'Bearer ' + token
+      if (!tracks[timeframe]) {
+        axios
+          .get(
+            'https://api.spotify.com/v1/me/top/tracks?time_range=' +
+              timeframe +
+              '&limit=50',
+            {
+              headers: {
+                Authorization: 'Bearer ' + token
+              }
             }
-          }
-        )
-        .then(response => setTracks(response.data.items))
-        .catch(response => console.error(response))
+          )
+          .then(response => setTracks(tracks => ({...tracks, [timeframe]: response.data.items})))
+          .catch(response => console.error(response))
+      }
 
-      axios
-        .get(
-          'https://api.spotify.com/v1/me/top/artists?time_range=' +
-            timeframe +
-            '&limit=50',
-          {
-            headers: {
-              Authorization: 'Bearer ' + token
+      if (!artists[timeframe]) {
+        axios
+          .get(
+            'https://api.spotify.com/v1/me/top/artists?time_range=' +
+              timeframe +
+              '&limit=50',
+            {
+              headers: {
+                Authorization: 'Bearer ' + token
+              }
             }
-          }
-        )
-        .then(response => setArtists(response.data.items))
-        .catch(response => console.error(response))
+          )
+          .then(response => setArtists(artists => ({...artists, [timeframe]: response.data.items})))
+          .catch(response => console.error(response))
+      }
     }
   }, [timeframe])
 

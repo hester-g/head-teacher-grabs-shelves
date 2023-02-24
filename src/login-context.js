@@ -41,16 +41,16 @@ const login = () => {
 
 function LoginProvider ({ children }) {
   const { token, setToken, resetToken } = useAuthToken()
-  const { resetTracks } = useTracks()
+  const { resetTracksAndArtists } = useTracks()
   const [user, setUser, resetUser] = useLocalStorageState('user', false)
   const history = useHistory()
 
   const logout = useCallback(() => {
     resetToken()
-    resetTracks()
+    resetTracksAndArtists()
     resetUser()
     history.push('')
-  }, [resetToken, resetTracks])
+  }, [resetToken, resetTracksAndArtists])
 
   useEffect(() => {
     if (!token) {
