@@ -52,24 +52,10 @@ const CoverImage = ({ src, title, artist, position }) => {
   </div>
 }
 
-export function Tracks ({ style, timeframe }) {
-  const { token } = useAuthToken()
-  const { tracks, setTracks } = useTracks()
+export function Tracks ({ style }) {
+  const { tracks } = useTracks()
 
-  useEffect(() => {
-    console.log(timeframe)
-    if (token) {
-      axios.get('https://api.spotify.com/v1/me/top/tracks?time_range=' + timeframe + '&limit=50', {
-        headers: {
-          Authorization: 'Bearer ' + token
-        }
-      })
-        .then(response => setTracks(response.data.items))
-        .catch(response => console.log(response))
-    }
-  }, [timeframe])
-
-  if (!token) {
+  if (!tracks) {
     return
   }
 

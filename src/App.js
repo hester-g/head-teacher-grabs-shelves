@@ -9,7 +9,6 @@ import TimeSelector from './TimeSelector'
 export function App () {
   const [current, setCurrent] = useState(0)
   const [username, setUsername] = useState(false)
-  const [timeframe, setTimeframe] = useState('long_term')
 
   useEffect(() => {
     const originalKeydown = document.onkeydown || (() => {})
@@ -36,14 +35,14 @@ export function App () {
   }, [current])
 
   return <>
-    <TracksProvider>
-      <AuthProvider>
+    <AuthProvider>
+      <TracksProvider>
         <Nav>
-          <TimeSelector setTimeframe={setTimeframe} />
+          <TimeSelector />
           <Auth />
         </Nav>
-        <Tracks style={{height: '100vh'}} timeframe={timeframe} />
-      </AuthProvider>
-    </TracksProvider>
+        <Tracks style={{height: '100vh'}} />
+      </TracksProvider>
+    </AuthProvider>
   </>
 }
