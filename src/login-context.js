@@ -3,14 +3,16 @@ import { useAuthToken } from './auth-context'
 import { useTracks } from './tracks-context'
 import axios from 'axios'
 import { useLocalStorageState } from './useLocalStorage'
+import { useHistory } from 'react-router-dom'
 
 const LoginContext = React.createContext()
 
 function getHashParams () {
   let hashParams = {}
-  let e, r = /([^&;=]+)=?([^&;]*)/g,
+  let e,
+    r = /([^&;=]+)=?([^&;]*)/g,
     q = window.location.hash.substring(1)
-  while (e = r.exec(q)) {
+  while ((e = r.exec(q))) {
     hashParams[e[1]] = decodeURIComponent(e[2])
   }
   return hashParams
@@ -23,7 +25,8 @@ const login = () => {
   let state = 'somethingsomething'
 
   // localStorage.setItem(stateKey, state);
-  let scope = 'user-read-playback-state user-read-currently-playing playlist-read-private playlist-read-collaborative user-read-playback-position user-top-read user-read-recently-played user-library-read user-read-email user-read-private'
+  let scope =
+    'user-read-playback-state user-read-currently-playing playlist-read-private playlist-read-collaborative user-read-playback-position user-top-read user-read-recently-played user-library-read user-read-email user-read-private'
 
   let url = 'https://accounts.spotify.com/authorize'
   url += '?response_type=token'
@@ -40,11 +43,13 @@ function LoginProvider ({ children }) {
   const { token, setToken, resetToken } = useAuthToken()
   const { resetTracks } = useTracks()
   const [user, setUser, resetUser] = useLocalStorageState('user', false)
+  const history = useHistory()
 
   const logout = useCallback(() => {
     resetToken()
     resetTracks()
     resetUser()
+    history.push('')
   }, [resetToken, resetTracks])
 
   useEffect(() => {
@@ -61,11 +66,12 @@ function LoginProvider ({ children }) {
 
   useEffect(() => {
     if (token) {
-      axios.get('https://api.spotify.com/v1/me', {
-        headers: {
-          Authorization: 'Bearer ' + token
-        }
-      })
+      axios
+        .get('https://api.spotify.com/v1/me', {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
         .then(response => setUser(response.data))
         .catch(response => console.error(response))
     }

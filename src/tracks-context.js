@@ -6,8 +6,14 @@ import { useAuthToken } from './auth-context'
 const TracksContext = React.createContext()
 
 function TracksProvider ({ children }) {
-  const [tracks, setTracks, resetTracks] = useLocalStorageState('top_tracks', [])
-  const [artists, setArtists, resetArtists] = useLocalStorageState('top_artists', [])
+  const [tracks, setTracks, resetTracks] = useLocalStorageState(
+    'top_tracks',
+    []
+  )
+  const [artists, setArtists, resetArtists] = useLocalStorageState(
+    'top_artists',
+    []
+  )
   const { token } = useAuthToken()
   const [timeframe, setTimeframe] = useState('long_term')
 
@@ -17,30 +23,44 @@ function TracksProvider ({ children }) {
     resetTracks: resetTracks,
     setTimeframeShort: () => setTimeframe('short_term'),
     setTimeframeMedium: () => setTimeframe('medium_term'),
-    setTimeframeLong: () => setTimeframe('long_term'),
+    setTimeframeLong: () => setTimeframe('long_term')
   }
 
   useEffect(() => {
     if (token) {
-      axios.get('https://api.spotify.com/v1/me/top/tracks?time_range=' + timeframe + '&limit=50', {
-        headers: {
-          Authorization: 'Bearer ' + token
-        }
-      })
+      axios
+        .get(
+          'https://api.spotify.com/v1/me/top/tracks?time_range=' +
+            timeframe +
+            '&limit=50',
+          {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
+          }
+        )
         .then(response => setTracks(response.data.items))
         .catch(response => console.error(response))
 
-      axios.get('https://api.spotify.com/v1/me/top/artists?time_range=' + timeframe + '&limit=50', {
-        headers: {
-          Authorization: 'Bearer ' + token
-        }
-      })
+      axios
+        .get(
+          'https://api.spotify.com/v1/me/top/artists?time_range=' +
+            timeframe +
+            '&limit=50',
+          {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
+          }
+        )
         .then(response => setArtists(response.data.items))
         .catch(response => console.error(response))
     }
   }, [timeframe])
 
-  return <TracksContext.Provider value={value}>{children}</TracksContext.Provider>
+  return (
+    <TracksContext.Provider value={value}>{children}</TracksContext.Provider>
+  )
 }
 
 function useTracks () {
