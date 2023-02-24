@@ -4,9 +4,22 @@ import CoverImage from './CoverImage'
 import BasicList from './BasicList'
 import Button from 'react-bootstrap/Button'
 
+const asMultipleTrackComponent =
+  Component =>
+  ({ tracks }) =>
+    tracks.map((track, index) => (
+      <Component
+        key={index}
+        src={track.album.images[0].url}
+        title={track.name}
+        subtitle={track.artists.map(artist => artist.name).join(', ')}
+        position={index + 1}
+      />
+    ))
+
 const displayModeMap = {
-  'CoverImage': CoverImage,
-  'BasicList': BasicList
+  CoverImage: asMultipleTrackComponent(CoverImage),
+  BasicList: asMultipleTrackComponent(BasicList)
 }
 
 export function Tracks ({ style }) {
@@ -17,20 +30,13 @@ export function Tracks ({ style }) {
     return
   }
 
-  const DisplayComponent = displayModeMap[displayMode] || CoverImage
+  const DisplayComponent =
+    displayModeMap[displayMode] || displayModeMap.CoverImage
 
   return (
     <div style={style}>
       <Button onClick={() => setDisplayMode('BasicList')}>?</Button>
-      {tracks.map((track, index) => (
-        <DisplayComponent
-          key={index}
-          src={track.album.images[0].url}
-          title={track.name}
-          subtitle={track.artists.map(artist => artist.name).join(', ')}
-          position={index + 1}
-        />
-      ))}
+      <DisplayComponent tracks={tracks} />
     </div>
   )
 }
