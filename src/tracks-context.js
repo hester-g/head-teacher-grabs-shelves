@@ -19,7 +19,6 @@ function TracksProvider ({ children }) {
   }
 
   useEffect(() => {
-    console.log(timeframe)
     if (token) {
       axios.get('https://api.spotify.com/v1/me/top/tracks?time_range=' + timeframe + '&limit=50', {
         headers: {
@@ -27,7 +26,7 @@ function TracksProvider ({ children }) {
         }
       })
         .then(response => setTracks(response.data.items))
-        .catch(response => console.log(response))
+        .catch(response => console.error(response))
     }
   }, [timeframe])
 

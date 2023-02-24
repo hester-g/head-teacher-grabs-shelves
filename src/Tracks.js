@@ -1,8 +1,7 @@
-import axios from 'axios'
-import React, { useEffect } from 'react'
-import { useAuthToken } from './auth-context'
+import React from 'react'
 import Image from 'react-bootstrap/Image'
 import { useTracks } from './tracks-context'
+import { useLogin } from './login-context'
 
 const CoverImage = ({ src, title, artist, position }) => {
   return <div id={position} style={{ position: 'relative', overflow: 'hidden', height: '100vh' }}>

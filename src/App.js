@@ -4,6 +4,7 @@ import { AuthProvider } from './auth-context'
 import { Nav } from './Nav'
 import { Tracks } from './Tracks'
 import { TracksProvider } from './tracks-context'
+import { LoginProvider } from './login-context'
 import TimeSelector from './TimeSelector'
 
 export function App () {
@@ -36,11 +37,13 @@ export function App () {
   return <>
     <AuthProvider>
       <TracksProvider>
-        <Nav>
-          <TimeSelector />
-          <Auth />
-        </Nav>
-        <Tracks style={{height: '100vh'}} />
+        <LoginProvider>
+          <Nav>
+            <TimeSelector />
+            <Auth />
+          </Nav>
+          <Tracks style={{height: '100vh'}} />
+        </LoginProvider>
       </TracksProvider>
     </AuthProvider>
   </>
