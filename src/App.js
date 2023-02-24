@@ -8,7 +8,6 @@ import TimeSelector from './TimeSelector'
 
 export function App () {
   const [current, setCurrent] = useState(0)
-  const [username, setUsername] = useState(false)
 
   useEffect(() => {
     const originalKeydown = document.onkeydown || (() => {})

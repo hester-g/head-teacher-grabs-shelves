@@ -13,7 +13,9 @@ function TracksProvider ({ children }) {
   const value = {
     tracks: tracks,
     resetTracks: reset,
-    setTimeframe: setTimeframe,
+    setTimeframeShort: () => setTimeframe('short_term'),
+    setTimeframeMedium: () => setTimeframe('medium_term'),
+    setTimeframeLong: () => setTimeframe('long_term'),
   }
 
   useEffect(() => {

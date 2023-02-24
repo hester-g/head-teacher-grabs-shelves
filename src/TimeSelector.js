@@ -3,10 +3,10 @@ import Button from 'react-bootstrap/Button'
 import { useTracks } from './tracks-context'
 
 export default function TimeSelector () {
-  const { setTimeframe } = useTracks()
+  const { setTimeframeShort, setTimeframeMedium, setTimeframeLong } = useTracks()
   return <>
-      <Button onClick={() => setTimeframe('long_term')}>Long</Button>
-      <Button onClick={() => setTimeframe('medium_term')}>Medium</Button>
-      <Button onClick={() => setTimeframe('short_term')}>Short</Button>
+      <Button onClick={setTimeframeShort}>Short</Button>
+      <Button onClick={setTimeframeMedium}>Medium</Button>
+      <Button onClick={setTimeframeLong}>Long</Button>
     </>
 }
