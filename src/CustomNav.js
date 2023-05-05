@@ -6,12 +6,13 @@ import { useLocation } from 'react-router-dom';
 
 const locationMap = {
   tracks: 'head teacher grabs shelves for courses [6]',
-  artists: 'messy rats surround first creators [7]'
+  artists: 'messy rats surround first creators [7]',
+  default: 'default title tbc'
 }
 
 export function CustomNav ({ children }) {
   const location = useLocation();
-  const locationName = location.pathname.replace(/\//g, '')
+  const locationName = location.pathname === '/' ? 'default' : location.pathname.replace(/\//g, '')
   return <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
     <Container>
     <Navbar.Brand href="#"><h1>{locationMap[locationName]}</h1></Navbar.Brand>

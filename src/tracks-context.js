@@ -2,14 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useLocalStorageState } from './useLocalStorage'
 import axios from 'axios'
 import { useAuthToken } from './auth-context'
+import timeframeMap, { longTerm, mediumTerm, shortTerm } from './times'
 
 const TracksContext = React.createContext()
-
-const timeframeMap = {
-  short_term: 'Short',
-  medium_term: 'Medium',
-  long_term: 'Long'
-}
 
 function TracksProvider ({ children }) {
   const [tracks, setTracks, resetTracks] = useLocalStorageState(
@@ -21,7 +16,7 @@ function TracksProvider ({ children }) {
     {}
   )
   const { token } = useAuthToken()
-  const [timeframe, setTimeframe] = useState('long_term')
+  const [timeframe, setTimeframe] = useState(shortTerm)
 
   const resetTracksAndArtists = () => {
     resetTracks()
@@ -32,9 +27,9 @@ function TracksProvider ({ children }) {
     tracks: tracks[timeframe],
     artists: artists[timeframe],
     resetTracksAndArtists: resetTracksAndArtists,
-    setTimeframeShort: () => setTimeframe('short_term'),
-    setTimeframeMedium: () => setTimeframe('medium_term'),
-    setTimeframeLong: () => setTimeframe('long_term'),
+    setTimeframeShort: () => setTimeframe(shortTerm),
+    setTimeframeMedium: () => setTimeframe(mediumTerm),
+    setTimeframeLong: () => setTimeframe(longTerm),
     getTimeframe: timeframeMap[timeframe]
   }
 

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useTracks } from './tracks-context'
 import CoverImage from './CoverImage'
 import BasicList from './BasicList'
-import Button from 'react-bootstrap/Button'
 
 const asMultipleTrackComponent =
   Component =>
