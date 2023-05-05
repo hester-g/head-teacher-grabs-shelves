@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocalStorageState } from './useLocalStorage'
-import axios from 'axios'
-import { useAuthToken } from './auth-context'
 import timeframeMap, { longTerm, mediumTerm, shortTerm } from './times'
+import getTop from './api'
 
 const TracksContext = React.createContext()
 
@@ -15,7 +14,7 @@ function TracksProvider ({ children }) {
     'top_artists',
     {}
   )
-  const { token } = useAuthToken()
+
   const [timeframe, setTimeframe] = useState(shortTerm)
 
   const resetTracksAndArtists = () => {
@@ -34,38 +33,12 @@ function TracksProvider ({ children }) {
   }
 
   useEffect(() => {
-    if (token) {
-      if (!tracks[timeframe]) {
-        axios
-          .get(
-            'https://api.spotify.com/v1/me/top/tracks?time_range=' +
-              timeframe +
-              '&limit=50',
-            {
-              headers: {
-                Authorization: 'Bearer ' + token
-              }
-            }
-          )
-          .then(response => setTracks(tracks => ({...tracks, [timeframe]: response.data.items})))
-          .catch(response => console.error(response))
-      }
+    if (!tracks[timeframe]) {
+      getTop(timeframe, 'tracks').then(response => setTracks(tracks => ({...tracks, [timeframe]: response.data.items})))
+    }
 
-      if (!artists[timeframe]) {
-        axios
-          .get(
-            'https://api.spotify.com/v1/me/top/artists?time_range=' +
-              timeframe +
-              '&limit=50',
-            {
-              headers: {
-                Authorization: 'Bearer ' + token
-              }
-            }
-          )
-          .then(response => setArtists(artists => ({...artists, [timeframe]: response.data.items})))
-          .catch(response => console.error(response))
-      }
+    if (!artists[timeframe]) {
+      getTop(timeframe, 'artists').then(response => setArtists(artists => ({...artists, [timeframe]: response.data.items})))
     }
   }, [timeframe])
 
