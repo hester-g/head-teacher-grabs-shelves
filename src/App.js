@@ -30,25 +30,25 @@ const Routes = () => {
 export function App () {
   const [current, setCurrent] = useState(0)
 
-  useEffect(() => {
-    const originalKeydown = document.onkeydown || (() => {})
+  // useEffect(() => {
+  //   const originalKeydown = document.onkeydown || (() => {})
 
-    document.onkeydown = e => {
-      originalKeydown || originalKeydown(e)
+  //   document.onkeydown = e => {
+  //     originalKeydown || originalKeydown(e)
 
-      e = e || window.event
+  //     e = e || window.event
 
-      if (e.keyCode == '37') {
-        setCurrent(c => (c > 0 ? c - 1 : c))
-      } else if (e.keyCode == '39') {
-        setCurrent(c => c + 1)
-      }
-    }
+  //     if (e.keyCode == '37') {
+  //       setCurrent(c => (c > 0 ? c - 1 : c))
+  //     } else if (e.keyCode == '39') {
+  //       setCurrent(c => c + 1)
+  //     }
+  //   }
 
-    return () => {
-      document.onkeydown = originalKeydown
-    }
-  }, [])
+  //   return () => {
+  //     document.onkeydown = originalKeydown
+  //   }
+  // }, [])
 
   useEffect(() => {
     window.location.hash = current > 0 ? current : ''
