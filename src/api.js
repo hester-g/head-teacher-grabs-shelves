@@ -1,9 +1,8 @@
+import React from 'react'
 import axios from 'axios'
-import { useAuthToken } from './auth-context'
 
-const { token } = useAuthToken()
-
-const getTop = (timeframe, type) => token && axios
+const getTopData = (timeframe, type, token) => {
+  return axios
   .get(
     'https://api.spotify.com/v1/me/top/' + type + '?time_range=' + timeframe + '&limit=50',
     {
@@ -14,5 +13,6 @@ const getTop = (timeframe, type) => token && axios
   )
   .then(response => response)
   .catch(response => console.error(response))
+}
 
-export default getTop
+export default getTopData

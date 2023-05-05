@@ -1,9 +1,9 @@
 import React from 'react'
-import { useTracks } from './tracks-context'
+import { useTopData } from './top-data-context'
 import CoverImage from './CoverImage'
 
 export function Artists ({ style }) {
-  const { artists } = useTracks()
+  const { artists } = useTopData()
 
   if (!artists) {
     return

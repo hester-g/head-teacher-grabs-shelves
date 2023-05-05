@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useLocalStorageState } from './useLocalStorage'
 import timeframeMap, { longTerm, mediumTerm, shortTerm } from './times'
-import getTop from './api'
+import getTopData from './api'
+import { useAuthToken } from './auth-context'
 
-const TracksContext = React.createContext()
+const TopDataContext = React.createContext()
 
-function TracksProvider ({ children }) {
+function TopDataProvider ({ children }) {
   const [tracks, setTracks, resetTracks] = useLocalStorageState(
     'top_tracks',
     {}
@@ -32,29 +33,33 @@ function TracksProvider ({ children }) {
     getTimeframe: timeframeMap[timeframe]
   }
 
-  useEffect(() => {
-    if (!tracks[timeframe]) {
-      getTop(timeframe, 'tracks').then(response => setTracks(tracks => ({...tracks, [timeframe]: response.data.items})))
-    }
+  const { token } = useAuthToken()
 
-    if (!artists[timeframe]) {
-      getTop(timeframe, 'artists').then(response => setArtists(artists => ({...artists, [timeframe]: response.data.items})))
+  useEffect(() => {
+    if (token) {
+      if (!tracks[timeframe]) {
+        getTopData(timeframe, 'tracks', token).then(response => setTracks(tracks => ({...tracks, [timeframe]: response.data.items})))
+      }
+
+      if (!artists[timeframe]) {
+        getTopData(timeframe, 'artists', token).then(response => setArtists(artists => ({...artists, [timeframe]: response.data.items})))
+      }
     }
   }, [timeframe])
 
   return (
-    <TracksContext.Provider value={value}>{children}</TracksContext.Provider>
+    <TopDataContext.Provider value={value}>{children}</TopDataContext.Provider>
   )
 }
 
-function useTracks () {
-  const context = React.useContext(TracksContext)
+function useTopData () {
+  const context = React.useContext(TopDataContext)
 
   if (context === undefined) {
-    throw new Error('useTracks must be used within an TracksProvider')
+    throw new Error('useTopData must be used within a TopDataProvider')
   }
 
   return context
 }
 
-export { TracksProvider, useTracks }
+export { TopDataProvider, useTopData }

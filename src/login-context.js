@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react'
 import { useAuthToken } from './auth-context'
-import { useTracks } from './tracks-context'
+import { useTopData } from './top-data-context'
 import axios from 'axios'
 import { useLocalStorageState } from './useLocalStorage'
 import { useHistory } from 'react-router-dom'
@@ -41,7 +41,7 @@ const login = () => {
 
 function LoginProvider ({ children }) {
   const { token, setToken, resetToken } = useAuthToken()
-  const { resetTracksAndArtists } = useTracks()
+  const { resetTracksAndArtists } = useTopData()
   const [user, setUser, resetUser] = useLocalStorageState('user', false)
   const history = useHistory()
 

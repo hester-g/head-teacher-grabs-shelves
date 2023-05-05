@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useTracks } from './tracks-context'
+import { useTopData } from './top-data-context'
 import CoverImage from './CoverImage'
 import BasicList from './BasicList'
 
@@ -22,7 +22,7 @@ const displayModeMap = {
 }
 
 export function Tracks ({ style }) {
-  const { tracks } = useTracks()
+  const { tracks } = useTopData()
   const [displayMode, setDisplayMode] = useState('CoverImage')
 
   if (!tracks) {

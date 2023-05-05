@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { AuthProvider } from './auth-context'
 import { CustomNav } from './CustomNav'
 import { Tracks } from './Tracks'
-import { TracksProvider } from './tracks-context'
+import { TopDataProvider } from './top-data-context'
 import { LoginProvider, useLogin } from './login-context'
 import TimeSelector from './TimeSelector'
 import { Switch, Route, Redirect, Link } from 'react-router-dom'
@@ -57,7 +57,7 @@ export function App () {
   return (
     <>
       <AuthProvider>
-        <TracksProvider>
+        <TopDataProvider>
           <LoginProvider>
             <CustomNav>
               <Link to={'/artists'} component={Nav.Link}>Artists</Link>
@@ -66,7 +66,7 @@ export function App () {
             </CustomNav>
             <Routes />
           </LoginProvider>
-        </TracksProvider>
+        </TopDataProvider>
       </AuthProvider>
     </>
   )
