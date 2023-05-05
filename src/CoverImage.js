@@ -1,11 +1,34 @@
 import React from 'react'
 import Image from 'react-bootstrap/Image'
+import Button from 'react-bootstrap/Button'
+import axios from 'axios'
+import { useAuthToken } from './auth-context'
 
-const CoverImage = ({ src, title, subtitle, position }) => {
+const CoverImage = ({ src, title, subtitle, position, uri }) => {
   const colour = position/50 * 360
   const backgroundBackgroundColour = !src ? {background: 'linear-gradient(90deg, hsla(' + colour + ', 100%, 50%, 0.8) 0%, hsla(' + colour + ', 80%, 80%, 0.8) 100%)'} : {}
   const backgroundImage = src ? {src} : {}
-  return <div id={position} style={{ position: 'relative', overflow: 'hidden', height: '100vh' }}>
+
+  const { token } = useAuthToken()
+
+  const switchToSong = () => {
+    axios.put(
+      'https://api.spotify.com/v1/me/player/play',
+      {
+        uris: [uri],
+        position_ms: 0
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }
+    )
+  }
+
+  return <>
+    <Button onClick={switchToSong}>hello</Button>
+    <div id={position} style={{ position: 'relative', overflow: 'hidden', height: '100vh' }}>
     <Image
       {...backgroundImage}
       style={{
@@ -51,6 +74,7 @@ const CoverImage = ({ src, title, subtitle, position }) => {
       </div>
     </div>
   </div>
+  </>
 }
 
 export default CoverImage

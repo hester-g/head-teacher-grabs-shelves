@@ -14,6 +14,7 @@ const asMultipleTrackComponent =
         title={track.name}
         subtitle={track.artists.map(artist => artist.name).join(', ')}
         position={index + 1}
+        uri={track.uri}
       />
     ))
 
@@ -57,10 +58,6 @@ export function Tracks ({ style }) {
           console.log('The Web Playback SDK successfully connected to Spotify!');
         }
       })
-
-      player.resume().then(() => {
-        console.log('Resumed!');
-      });
     };
   }, []);
 
