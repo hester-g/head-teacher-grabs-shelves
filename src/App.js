@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Auth } from './Auth'
 import { AuthProvider } from './auth-context'
-import { Nav } from './Nav'
+import { CustomNav } from './CustomNav'
 import { Tracks } from './Tracks'
 import { TracksProvider } from './tracks-context'
 import { LoginProvider, useLogin } from './login-context'
 import TimeSelector from './TimeSelector'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect, Link } from 'react-router-dom'
 import { Artists } from './Artists'
+import Nav from 'react-bootstrap/Nav'
 
 const Routes = () => {
   const { loggedIn } = useLogin()
@@ -59,10 +60,11 @@ export function App () {
       <AuthProvider>
         <TracksProvider>
           <LoginProvider>
-            <Nav>
+            <CustomNav>
+              <Link to={'/artists'} component={Nav.Link}>Artists</Link>
+              <Link to={'/tracks'} component={Nav.Link}>Tracks</Link>
               <TimeSelector />
-              <Auth />
-            </Nav>
+            </CustomNav>
             <Routes />
           </LoginProvider>
         </TracksProvider>

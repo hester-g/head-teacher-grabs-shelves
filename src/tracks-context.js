@@ -5,6 +5,12 @@ import { useAuthToken } from './auth-context'
 
 const TracksContext = React.createContext()
 
+const timeframeMap = {
+  short_term: 'Short',
+  medium_term: 'Medium',
+  long_term: 'Long'
+}
+
 function TracksProvider ({ children }) {
   const [tracks, setTracks, resetTracks] = useLocalStorageState(
     'top_tracks',
@@ -28,7 +34,8 @@ function TracksProvider ({ children }) {
     resetTracksAndArtists: resetTracksAndArtists,
     setTimeframeShort: () => setTimeframe('short_term'),
     setTimeframeMedium: () => setTimeframe('medium_term'),
-    setTimeframeLong: () => setTimeframe('long_term')
+    setTimeframeLong: () => setTimeframe('long_term'),
+    getTimeframe: timeframeMap[timeframe]
   }
 
   useEffect(() => {
