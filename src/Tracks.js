@@ -35,7 +35,6 @@ export function Tracks ({ style }) {
 
   return (
     <div style={style}>
-      <Button onClick={() => setDisplayMode('BasicList')}>?</Button>
       <DisplayComponent tracks={tracks} />
     </div>
   )
