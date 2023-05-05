@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { Auth } from './Auth'
 import { AuthProvider } from './auth-context'
 import { CustomNav } from './CustomNav'
 import { Tracks } from './Tracks'
