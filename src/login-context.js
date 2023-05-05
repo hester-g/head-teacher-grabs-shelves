@@ -26,7 +26,7 @@ const login = () => {
 
   // localStorage.setItem(stateKey, state);
   let scope =
-    'user-read-playback-state user-read-currently-playing playlist-read-private playlist-read-collaborative user-read-playback-position user-top-read user-read-recently-played user-library-read user-read-email user-read-private'
+    'user-read-playback-state user-modify-playback-state user-read-currently-playing playlist-read-private playlist-read-collaborative user-read-playback-position user-top-read user-read-recently-played user-library-read user-read-email user-read-private streaming'
 
   let url = 'https://accounts.spotify.com/authorize'
   url += '?response_type=token'
